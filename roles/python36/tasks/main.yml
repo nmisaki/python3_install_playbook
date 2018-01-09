@@ -1,0 +1,27 @@
+---
+- name: install packages
+  yum: name={{ item }} state=installed
+  with_items:
+    - epel-release
+    - https://centos7.iuscommunity.org/ius-release.rpm
+    - python36u
+    - python36u-libs
+    - python36u-devel
+    - python36u-pip
+
+- name: create symlink(python)
+  file:
+    src: /usr/bin/python3.6
+    dest: /usr/bin/python3
+    state: link
+
+- name: create symlink(python)
+  file:
+    src: /usr/bin/pip3.6
+    dest: /usr/bin/pip3
+    state: link
+
+- name: python modules
+  pip: name={{ item }} executable=pip3.6
+  with_items:
+    - jinja2
